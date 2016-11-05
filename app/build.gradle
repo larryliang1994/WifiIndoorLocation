@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "24.0.2"
+    defaultConfig {
+        applicationId "com.nuaa.larry.wifiindoorlocation"
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            signingConfig signingConfigs.debug
+//            proguardFiles 'proguard-rules.pro'
+//        }
+//
+//        debug {
+//            minifyEnabled true
+//            signingConfig signingConfigs.debug
+//            proguardFiles 'proguard-rules.pro'
+//        }
+//    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("android.keystore")
+            storePassword "larryhowell"
+            keyAlias "android.keystore"
+            keyPassword "larryhowell"
+        }
+    }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.zhy:okhttputils:2.6.2'
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:support-vector-drawable:25.0.0'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'io.github.hendraanggrian:circularrevealanimator:0.1.4'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'me.drakeet.materialdialog:library:1.2.2'
+    testCompile 'junit:junit:4.12'
+    compile files('libs/avoscloud-sdk-v3.14.9.jar')
+    compile files('libs/fastjson.jar')
+    compile files('libs/okhttp-2.6.0-leancloud.jar')
+    compile files('libs/okio-1.6.0-leancloud.jar')
+}

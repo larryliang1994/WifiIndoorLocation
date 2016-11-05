@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.ScannerActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:transitionName="appBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="166dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="center_vertical|left"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleMarginTop="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="wifi扫描器">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_collapseMode="parallax">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/wifi" />
+
+                <TextView
+                    android:id="@+id/tv_wifi_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="共"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_ap_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="个 "
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_ap_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="默认AP"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <io.codetail.widget.RevealFrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="36dp">
+
+                    <Button
+                        android:id="@+id/btn_scan"
+                        android:layout_width="70dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/radius_button_not_pressed"
+                        android:text="扫描"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                </io.codetail.widget.RevealFrameLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:title="wifi扫描器" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/wifi_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="附近的wifi将显示在这里"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

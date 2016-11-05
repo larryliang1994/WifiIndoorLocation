@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white"
+    tools:context=".ui.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:transitionName="appBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="不知道放什么好" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="成功的话，这里会显示地点名\n没反应就说明还没开发好"/>
+
+            <Button
+                android:id="@+id/btn_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:text="点一下就获取地点"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentWhite"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floating_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        fab:fab_addButtonColorNormal="@color/colorPrimary"
+        fab:fab_addButtonColorPressed="@color/colorPrimary"
+        fab:fab_addButtonPlusIconColor="@android:color/white"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorPrimary"
+            fab:fab_icon="@drawable/upload"
+            fab:fab_size="mini"
+            fab:fab_title="采集数据" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorPrimary"
+            fab:fab_icon="@drawable/wifi"
+            fab:fab_size="mini"
+            fab:fab_title="查看附近wifi" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</android.support.design.widget.CoordinatorLayout>
