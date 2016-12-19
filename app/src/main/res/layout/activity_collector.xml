@@ -27,14 +27,16 @@
             app:expandedTitleMarginStart="16dp"
             app:expandedTitleMarginTop="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="wifi采集器">
+            app:title="@string/wifi_collector">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:title="wifi采集器" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="@string/wifi_collector" />
 
             <TextView
                 android:id="@+id/tv_collected_num"
@@ -42,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_margin="16dp"
-                android:text="正在采集第 7 组数据"
+                android:text="@string/collecting"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:layout_collapseMode="parallax" />
@@ -96,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="共"
+                android:text="@string/total"
                 android:textColor="@color/secondary_text"
                 android:textSize="16sp" />
 
@@ -113,7 +115,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="维"
+                android:text="@string/dimensions"
                 android:textColor="@color/secondary_text"
                 android:textSize="16sp" />
 
@@ -124,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="有效率"
+                android:text="@string/valid_rate"
                 android:textColor="@color/secondary_text"
                 android:textSize="16sp" />
 
@@ -154,8 +156,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/round_button"
-            android:foreground="@drawable/ripple"
-            android:text="立即上传"
+            android:text="@string/upload_now"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
@@ -164,8 +165,7 @@
             android:layout_width="200dp"
             android:layout_height="45dp"
             android:background="@drawable/round_button"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:text="重新采集"
+            android:text="@string/recollect"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
@@ -224,7 +224,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
-                    android:text="更多操作"
+                    android:text="@string/more_options"
                     android:textColor="@color/secondary_text" />
 
                 <ImageButton

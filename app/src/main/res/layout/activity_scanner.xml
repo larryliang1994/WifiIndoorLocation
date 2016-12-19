@@ -25,7 +25,7 @@
             app:expandedTitleMarginStart="16dp"
             app:expandedTitleMarginTop="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="wifi扫描器">
+            app:title="@string/wifi_scanner">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="共"
+                    android:text="@string/total"
                     android:textColor="@android:color/white"
                     android:textSize="14sp" />
 
@@ -97,7 +97,7 @@
                         android:layout_width="70dp"
                         android:layout_height="36dp"
                         android:background="@drawable/radius_button_not_pressed"
-                        android:text="扫描"
+                        android:text="@string/scan"
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
 
@@ -110,7 +110,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:title="wifi扫描器" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="@string/wifi_scanner" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -136,7 +138,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="附近的wifi将显示在这里"
+            android:text="@string/nearby_wifi_will_be_showed_here"
             android:textSize="16sp" />
 
     </LinearLayout>

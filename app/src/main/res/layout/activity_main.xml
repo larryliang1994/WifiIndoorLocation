@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -32,25 +33,28 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="不知道放什么好" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="invisible"
+                android:layout_gravity="center"/>
+
             <TextView
                 android:id="@+id/tv_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:textSize="20sp"
-                android:text="成功的话，这里会显示地点名\n没反应就说明还没开发好"/>
+                android:text="@string/gonna_show_location"/>
 
             <Button
                 android:id="@+id/btn_location"
@@ -60,7 +64,7 @@
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:layout_gravity="center"
-                android:text="点一下就获取地点"/>
+                android:text="@string/click_and_get_location"/>
 
         </LinearLayout>
 
@@ -93,7 +97,7 @@
             fab:fab_colorPressed="@color/colorPrimary"
             fab:fab_icon="@drawable/upload"
             fab:fab_size="mini"
-            fab:fab_title="采集数据" />
+            fab:fab_title="@string/collect_data" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_scan"
@@ -104,7 +108,7 @@
             fab:fab_colorPressed="@color/colorPrimary"
             fab:fab_icon="@drawable/wifi"
             fab:fab_size="mini"
-            fab:fab_title="查看附近wifi" />
+            fab:fab_title="@string/check_nearby_wifi" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

@@ -26,6 +26,38 @@
 
     <string name="child_count_error">出错</string>
 
+    <string name="wifi_collector">wifi采集器</string>
+    <string name="more_options">更多操作</string>
+    <string name="recollect">重新采集</string>
+    <string name="upload_now">立即上传</string>
+    <string name="valid_rate">有效率</string>
+    <string name="total">共</string>
+    <string name="dimensions">维</string>
+    <string name="collecting">采集中</string>
+    <string name="dont_know_what_to_do">这里不知道放什么好</string>
+    <string name="fingerprint_of_this_location">该点的wifi指纹</string>
+    <string name="gonna_show_location">这里会显示地点名</string>
+    <string name="click_and_get_location">点一下就获取地点</string>
+    <string name="collect_data">采集数据</string>
+    <string name="check_nearby_wifi">查看附近wifi</string>
+    <string name="wifi_scanner">wifi扫描器</string>
+    <string name="nearby_wifi_will_be_showed_here">附近的wifi将显示在这里</string>
+    <string name="error_code">错误代码</string>
+    <string name="click_the_button_to_collect">点击右侧开始采集</string>
+    <string name="close">关闭</string>
+    <string name="scan_complete">采集完成</string>
+    <string name="cant_find_any_wifi">没有采集到任何wifi信息</string>
+    <string name="copy_all_valid_data">复制所有可信数据</string>
+    <string name="copy_processed_fingerprint">复制已处理的指纹</string>
+    <string name="enter_the_location_name">输入该点名称</string>
+    <string name="upload">上传</string>
+    <string name="please_enter_the_name">名称不能为空</string>
+    <string name="uploading">上传中…</string>
+    <string name="upload_complete">上传完成</string>
+    <string name="upload_failed">上传出错，请重试</string>
+    <string name="scanning">扫描中</string>
+    <string name="done_percentage">已完成</string>
+
     <string-array name="group_count">
         <item>10组</item>
         <item>20组</item>

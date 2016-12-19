@@ -128,11 +128,11 @@ public class CollectorActivity extends AppCompatActivity {
     private void initView() {
         initToolbar();
 
-        mCalculator = new Calculator();
+        mCalculator = new Calculator(this);
 
         mWaterWaveView.setmWaterLevel(0);
 
-        mCollectedNumTextView.setText("点击右侧开始采集");
+        mCollectedNumTextView.setText(R.string.click_the_button_to_collect);
 
         mFabProgressCircle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,12 +163,12 @@ public class CollectorActivity extends AppCompatActivity {
                         mFabProgressCircle.hide();
 
                         new AlertDialog.Builder(CollectorActivity.this)
-                                .setTitle("没有采集到任何wifi信息")
+                                .setTitle("收不到 "+ Config.APName +" 的信号")
                                 .setCancelable(true)
-                                .setPositiveButton("关闭", null)
+                                .setPositiveButton(R.string.close, null)
                                 .show();
 
-                        mCollectedNumTextView.setText("点击右侧开始采集");
+                        mCollectedNumTextView.setText(R.string.click_the_button_to_collect);
 
                         mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
 
@@ -185,7 +185,7 @@ public class CollectorActivity extends AppCompatActivity {
         mFabProgressCircle.attachListener(new FABProgressListener() {
             @Override
             public void onFABProgressAnimationEnd() {
-                mCollectedNumTextView.setText("采集完成");
+                mCollectedNumTextView.setText(R.string.scan_complete);
 
                 mCalculator.process();
 
@@ -290,7 +290,7 @@ public class CollectorActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibtn_copy:
-                String[] items = {"复制所有可信数据", "复制已处理的指纹"};
+                String[] items = {getString(R.string.copy_all_valid_data), getString(R.string.copy_processed_fingerprint)};
                 new AlertDialog.Builder(this).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -313,23 +313,23 @@ public class CollectorActivity extends AppCompatActivity {
                 final TextView textView = (TextView) content.findViewById(R.id.tv_msg);
 
                 final MaterialDialog uploadDialog = new MaterialDialog(CollectorActivity.this);
-                uploadDialog.setTitle("输入该点名称")
+                uploadDialog.setTitle(getString(R.string.enter_the_location_name))
                         .setContentView(content)
                         .setCanceledOnTouchOutside(true)
-                        .setNegativeButton("取消", new View.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 uploadDialog.dismiss();
                             }
                         })
-                        .setPositiveButton("上传", new View.OnClickListener() {
+                        .setPositiveButton(getString(R.string.upload), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 textView.setVisibility(View.VISIBLE);
                                 if (editText.getText() == null || "".equals(editText.getText().toString())) {
-                                    textView.setText("名称不能为空");
+                                    textView.setText(R.string.please_enter_the_name);
                                 } else {
-                                    textView.setText("上传中...");
+                                    textView.setText(R.string.uploading);
                                     doUpload(uploadDialog, textView, editText.getText().toString());
                                 }
                             }
@@ -348,7 +348,9 @@ public class CollectorActivity extends AppCompatActivity {
         String output = "";
         output += "[";
         for (ApInfo apInfo : mCalculator.getFingerprint()) {
-            output += "{\"mac\":\"" + apInfo.getMacAddress() + "\",\"rss\":\"" + apInfo.getRss() + "\"},";
+            if(apInfo.getRss() > -98) {
+                output += "{\"mac\":\"" + apInfo.getMacAddress() + "\",\"rss\":\"" + apInfo.getRss() + "\"},";
+            }
         }
         output = output.substring(0, output.length() - 1);
         output += "]";
@@ -364,9 +366,9 @@ public class CollectorActivity extends AppCompatActivity {
                     public void run() {
                         dialog.dismiss();
                         if (e == null) {
-                            Toast.makeText(CollectorActivity.this, "上传完成", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CollectorActivity.this, R.string.upload_complete, Toast.LENGTH_SHORT).show();
                         } else {
-                            textView.setText("上传出错，请重试");
+                            textView.setText(R.string.upload_failed);
                             e.printStackTrace();
                         }
                     }
@@ -414,7 +416,7 @@ public class CollectorActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mCollectedNumTextView.setText("点击右侧开始采集");
+                mCollectedNumTextView.setText(R.string.click_the_button_to_collect);
 
                 mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.play));
 
@@ -435,10 +437,10 @@ public class CollectorActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("该点Wifi指纹")
+                .setTitle(R.string.fingerprint_of_this_location)
                 .setView(listView)
                 .setCancelable(true)
-                .setPositiveButton("关闭", null)
+                .setPositiveButton(R.string.close, null)
                 .create();
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);

@@ -29,7 +29,7 @@ public class App extends Application {
         sp = getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE);
 
         Config.GroupCountIndex = sp.getInt(Constants.SP_KEY_GROUP_COUNT, 3);
-        Config.CollectIntervalIndex = sp.getInt(Constants.SP_KEY_COLLECT_INTERVAL, 0);
+        Config.CollectIntervalIndex = sp.getInt(Constants.SP_KEY_COLLECT_INTERVAL, 2);
         Config.DependableProbabilityIndex = sp.getInt(Constants.SP_KEY_DEPENDABLE_RATE, 0);
     }
 }

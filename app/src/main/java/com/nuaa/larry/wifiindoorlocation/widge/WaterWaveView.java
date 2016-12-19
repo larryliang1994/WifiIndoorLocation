@@ -58,7 +58,7 @@ public class WaterWaveView extends View {
 
 	//绘制文字显示在圆形中间，只是我没有设置，我觉得写在布局上也挺好的
 	private String flowNum = "";
-	private String flowLeft = "已完成";
+	private String flowLeft = getContext().getString(R.string.done_percentage);
 
 	/**
 	 * @param context

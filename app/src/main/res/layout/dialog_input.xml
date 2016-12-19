@@ -20,6 +20,6 @@
         android:textColor="@android:color/holo_red_dark"
         android:layout_marginTop="16dp"
         android:visibility="gone"
-        android:text="错误代码"/>
+        android:text="@string/error_code"/>
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nuaa.larry.wifiindoorlocation.App;
 import com.nuaa.larry.wifiindoorlocation.R;
@@ -153,6 +154,9 @@ public class PreferenceActivity extends AppCompatActivity {
             case R.id.rv_dependable_rate:
                 mDependableRateSpinner.performClick();
                 break;
+
+            default:
+                Toast.makeText(this, "并没有实现这个功能，只是占个坑玩玩的", Toast.LENGTH_SHORT).show();
         }
     }
 

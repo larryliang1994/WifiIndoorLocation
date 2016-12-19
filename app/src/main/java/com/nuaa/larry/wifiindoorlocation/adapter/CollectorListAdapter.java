@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.nuaa.larry.wifiindoorlocation.R;
 import com.nuaa.larry.wifiindoorlocation.common.Config;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -20,9 +22,11 @@ import butterknife.ButterKnife;
 
 public class CollectorListAdapter extends RecyclerView.Adapter {
     private Context mContext;
+    private List<ScanResult> mWifiList;
 
-    public CollectorListAdapter(Context context) {
+    public CollectorListAdapter(Context context, List<ScanResult> wifiList) {
         this.mContext = context;
+        this.mWifiList = wifiList;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class CollectorListAdapter extends RecyclerView.Adapter {
 
         ViewHolder holder = (ViewHolder) viewHolder;
 
-        ScanResult result = Config.Scanner.getWifiList().get(position);
+        ScanResult result = mWifiList.get(position);
 
         holder.tv_name.setText(result.SSID);
         holder.tv_mac.setText(result.BSSID);
@@ -49,12 +53,12 @@ public class CollectorListAdapter extends RecyclerView.Adapter {
 
     @Override
     public long getItemId(int i) {
-        return Config.Scanner.getWifiList().get(i).hashCode();
+        return mWifiList.get(i).hashCode();
     }
 
     @Override
     public int getItemCount() {
-        return Config.Scanner.getWifiList().size();
+        return mWifiList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

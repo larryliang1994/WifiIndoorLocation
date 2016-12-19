@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +28,17 @@ import com.avos.avoscloud.FunctionCallback;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.nuaa.larry.wifiindoorlocation.R;
 import com.nuaa.larry.wifiindoorlocation.common.ApInfo;
+import com.nuaa.larry.wifiindoorlocation.common.Calculator;
 import com.nuaa.larry.wifiindoorlocation.common.Config;
+import com.nuaa.larry.wifiindoorlocation.common.Constants;
 import com.nuaa.larry.wifiindoorlocation.common.WifiScanner;
 import com.nuaa.larry.wifiindoorlocation.widge.CircularAnim;
+import com.nuaa.larry.wifiindoorlocation.widge.fabProgressCircle.completefab.CompleteFABListener;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -55,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_location)
     TextView mLocationTextView;
+
+    @Bind(R.id.progressBar)
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,37 +161,91 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.btn_location:
-                Config.Scanner.scanOnce();
+                if (checkWifi()) {
+                    mProgressBar.setVisibility(View.VISIBLE);
 
-                String output = "";
-                output += "[";
-                for (ScanResult scanResult : Config.Scanner.getWifiList()) {
-                    output += "{\"mac\":\"" + scanResult.BSSID + "\",\"rss\":\"" + scanResult.level + "\"},";
-                }
-                output = output.substring(0, output.length() - 1);
-                output += "]";
+                    final int groupCountIndex = Config.GroupCountIndex;
+                    final int collectIntervalIndex = Config.CollectIntervalIndex;
+                    final int dependableProbabilityIndex = Config.DependableProbabilityIndex;
 
-                Map<String, String> parameters = new HashMap<>();
-                parameters.put("info", output);
+                    Config.GroupCountIndex = 0;
+                    Config.DependableProbabilityIndex = 0;
+                    Config.CollectIntervalIndex = 0;
 
-                // 调用云函数 averageStars
-                AVCloud.callFunctionInBackground("getLocation", parameters, new FunctionCallback() {
-                    public void done(Object object, AVException e) {
-                        if (e == null) {
-                            if (object instanceof String) {
-                                String result = (String) object;
-                                if (!"".equals(result)) {
-                                    mLocationTextView.setText(result);
+                    final Calculator calculator = new Calculator(this);
+
+                    calculator.collect(new Calculator.CalculatorCollectCallback() {
+                        @Override
+                        public void collectProcess(int process) {
+                        }
+
+                        @Override
+                        public void collectFail() {
+                            Toast.makeText(MainActivity.this, "收不到 "+ Config.APName +" 的信号", Toast.LENGTH_SHORT).show();
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void doneCollect() {
+                            List<List<ApInfo>> dataList = calculator.preProcess();
+                            List<ApInfo> fingerprint = new ArrayList<>();
+
+                            for (int dimension = 0; dimension < calculator.getDimensions().size(); dimension++) {
+                                double rss = 0;
+                                for (int groupIndex = 0; groupIndex < Constants.GROUP_COUNT[Config.GroupCountIndex]; groupIndex++) {
+                                    rss += dataList.get(groupIndex).get(dimension).getRss();
                                 }
+                                fingerprint.add(new ApInfo(calculator.getDimensions().get(dimension), rss / Constants.GROUP_COUNT[Config.GroupCountIndex]));
                             }
 
-                            Log.i("info", object.toString());
-                        } else {
-                            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
+                            Config.GroupCountIndex = groupCountIndex;
+                            Config.CollectIntervalIndex = collectIntervalIndex;
+                            Config.DependableProbabilityIndex = dependableProbabilityIndex;
+
+                            int apNum = 0;
+
+                            String output = "";
+                            output += "{";
+
+                            for (ApInfo apInfo : fingerprint) {
+                                if(apInfo.getRss() > -98) {
+                                    apNum++;
+                                    output += "\'mac" + apNum + "\':\'" + apInfo.getMacAddress() + "\',\'rss" + apNum + "\':\'" + apInfo.getRss() + "\',";
+                                }
+                            }
+                            output += "\'count\':\'" + apNum + "\'";
+                            output += "}";
+
+                            Log.i("info", output);
+
+                            Toast.makeText(MainActivity.this, output, Toast.LENGTH_LONG).show();
+
+                            Map<String, String> parameters = new HashMap<>();
+                            parameters.put("info", output);
+
+                            AVCloud.callFunctionInBackground("get_location", parameters, new FunctionCallback() {
+                                public void done(Object object, AVException e) {
+                                    if (e == null) {
+                                        if (object instanceof String) {
+                                            String result = (String) object;
+                                            if (!"".equals(result)) {
+                                                mLocationTextView.setText(result);
+                                            }
+                                        }
+
+                                        Log.i("info", object.toString());
+
+                                        mProgressBar.setVisibility(View.INVISIBLE);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
-                    }
-                });
+                    });
+                }
+
                 break;
         }
     }

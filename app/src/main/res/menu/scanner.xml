@@ -5,15 +5,27 @@
     tools:context=".ui.ScannerActivity">
 
     <item
-        android:id="@+id/show_ap"
+        android:id="@+id/copy_data"
         android:orderInCategory="100"
-        android:title="只显示默认AP"
+        android:title="把所有数据复制一份"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/show_all"
+        android:id="@+id/clear_data"
         android:orderInCategory="100"
-        android:title="显示所有AP"
+        android:title="去除无效数据"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/distance_in_group"
+        android:orderInCategory="100"
+        android:title="打印同一点两组数据的距离"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/distance_same_level"
+        android:orderInCategory="100"
+        android:title="打印同一层5组数据的距离"
         app:showAsAction="never" />
 
 </menu>

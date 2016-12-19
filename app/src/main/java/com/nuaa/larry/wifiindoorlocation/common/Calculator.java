@@ -1,5 +1,6 @@
 package com.nuaa.larry.wifiindoorlocation.common;
 
+import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +21,9 @@ public class Calculator {
     private List<List<ApInfo>> dependableProbabilityValues;
     private List<ApInfo> fingerprint;
 
+    private WifiScanner wifiScanner;
+    private Context context;
+
     private Handler mHandler;
     private Runnable mRunnable;
 
@@ -27,7 +31,9 @@ public class Calculator {
 
     public int validCount = 0;
 
-    public Calculator() {
+    public Calculator(Context context) {
+        this.context = context;
+
         mHandler = new Handler();
 
         counter = new Counter();
@@ -39,6 +45,8 @@ public class Calculator {
         fingerprint = new ArrayList<>();
 
         dependableProbabilityValues = new ArrayList<>();
+
+        wifiScanner = new WifiScanner(context);
     }
 
     /**
@@ -52,10 +60,10 @@ public class Calculator {
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                Config.Scanner.scanOnce();
+                wifiScanner.scanOnce();
 
                 List<ApInfo> availableList = new ArrayList<>();
-                for (ScanResult result : Config.Scanner.getWifiList()) {
+                for (ScanResult result : wifiScanner.getWifiList()) {
                     if (Config.APName.equals(result.SSID)) {
                         availableList.add(new ApInfo(result.BSSID, result.level));
                     }
@@ -78,7 +86,7 @@ public class Calculator {
                 } else {
                     mHandler.removeCallbacks(mRunnable);
 
-                    dataList.remove(dataList.size() - 1);
+                    clear();
 
                     callback.collectFail();
                 }
@@ -93,7 +101,6 @@ public class Calculator {
      * <p>
      * 1、预处理，统一数据维度
      * 2、Config.PointCount组数据中，每组数据通过对数正态分布模型，得到一个可信指纹
-     * 3、使用Fisher判别法，建立判别式，得到判别式中的参数列表
      */
     public void process() {
         dataList = preProcess();
@@ -159,9 +166,11 @@ public class Calculator {
             double newRSS = -(Math.pow(Math.E, newAverage));
 
             // 保存
-            fingerprint.add(new ApInfo(dimensions.get(dimension), newRSS));
+            if(newRSS > -98) {
+                fingerprint.add(new ApInfo(dimensions.get(dimension), newRSS));
 
-            dependableProbabilityValues.add(dependableProbabilityValue);
+                dependableProbabilityValues.add(dependableProbabilityValue);
+            }
         }
 
         Log.i("fingerprint", "-----------------fingerprint-----------------");
@@ -175,7 +184,7 @@ public class Calculator {
     }
 
     // 统一数据维度
-    private List<List<ApInfo>> preProcess() {
+    public List<List<ApInfo>> preProcess() {
         List<List<ApInfo>> newDataList = new ArrayList<>();
 
         List<String> dimensions = getDimension();
@@ -210,7 +219,6 @@ public class Calculator {
             output += "\n";
         }
         output += "---------------------------------------------------------------\n";
-
 
         Log.i("info", output);
 
@@ -252,6 +260,7 @@ public class Calculator {
         dimensions = new ArrayList<>();
         fingerprint = new ArrayList<>();
         dependableProbabilityValues = new ArrayList<>();
+        wifiScanner = new WifiScanner(context);
         validCount = 0;
     }
 
